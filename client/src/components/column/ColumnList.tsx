@@ -14,7 +14,7 @@ const ColumnList = ({ columns }: ColumnListProps) => {
 
   
   return (
-    <div className='flex gap-6 w-full flex-1 overflow-x-auto '>
+    <div className='flex gap-6 w-full flex-1 p-2 overflow-x-auto '>
       {columns.map((column, index) => {
         const columnType = colorKeys[index % colorKeys.length];
         return (
