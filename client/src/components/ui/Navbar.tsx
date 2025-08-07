@@ -31,7 +31,6 @@ function NavBarTest() {
   const boards = useBoardStore((state) => state.boards);
   const fetchBoards = useBoardStore((state) => state.fetchBoards);
 
-  // Fetch boards when component mounts to get count
   useEffect(() => {
     if (isAuthenticated) {
       fetchBoards();
@@ -50,7 +49,11 @@ function NavBarTest() {
     setIsLoggingOut(true);
     handleCloseUserMenu();
     try {
-      logout();
+      await logout();
+      navigate('/login', { replace: true });
+    } catch (error) {
+      console.error('Logout error:', error);
+
       navigate('/login', { replace: true });
     } finally {
       setIsLoggingOut(false);
@@ -74,7 +77,6 @@ function NavBarTest() {
     }
   };
 
-  // Get user initials for avatar
   const getUserInitials = () => {
     if (!user) return 'U';
     const username = user.username || '';
@@ -96,7 +98,7 @@ function NavBarTest() {
       sx={{
         bgcolor: 'primary.main',
         boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.30)',
-        zIndex: (theme) => theme.zIndex.drawer + 1, 
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Container maxWidth='xl'>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useState, type FormEvent } from 'react';
 import { ClipLoader } from 'react-spinners';
@@ -6,7 +6,6 @@ import { Eye, EyeClosed } from 'lucide-react';
 
 const Register = () => {
   const register = useAuthStore((s) => s.register);
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -21,7 +20,7 @@ const Register = () => {
     setError(null);
     try {
       await register(username, email, password);
-      navigate('/workspace'); // Corrigé : workspace au lieu de boardsPage
+      window.location.replace('/workspace');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {

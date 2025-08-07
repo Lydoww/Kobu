@@ -6,9 +6,12 @@ import WorkspaceHeader from '../components/workspace/WorkspaceHeader';
 import StatsCards from '../components/workspace/StatsCard';
 import BoardsGrid from '../components/workspace/BoardsGrid';
 import ErrorState from '../components/workspace/ErrorState';
+import { useAuthStore } from '../store/authStore';
 
 function Workspace() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const boards = useBoardStore((state) => state.boards);
   const loading = useBoardStore((state) => state.loading);
@@ -16,8 +19,10 @@ function Workspace() {
   const fetchBoards = useBoardStore((state) => state.fetchBoards);
 
   useEffect(() => {
-    fetchBoards();
-  }, [fetchBoards]);
+    if (isAuthenticated) {
+      fetchBoards();
+    }
+  }, [isAuthenticated, fetchBoards]);
 
   const handleOpenModal = () => {
     setIsModalOpen(!isModalOpen);

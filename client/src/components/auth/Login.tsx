@@ -1,12 +1,11 @@
 import { useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { ClipLoader } from 'react-spinners';
 import { Eye, EyeClosed } from 'lucide-react';
 
 const Login = () => {
   const login = useAuthStore((s) => s.login);
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +20,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate('/workspace'); // Corrigé : workspace au lieu de boardsPage
+      window.location.replace('/workspace');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

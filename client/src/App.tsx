@@ -8,9 +8,25 @@ import BoardsPage from './pages/Workspace';
 import WorkspacePage from './pages/Workspace';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
-import { Toaster } from 'react-hot-toast';
+import { useAuthStore } from './store/authStore';
+import { useEffect, useState } from 'react';
 
 const App = () => {
+  const { checkAuth, isAuthenticated } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const initAuth = async () => {
+      await checkAuth();
+      setIsLoading(false);
+    };
+    initAuth();
+  }, [checkAuth]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -46,31 +62,6 @@ const App = () => {
         {/* 404 page */}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-      <Toaster
-        position='top-right'
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#fff',
-            color: '#333',
-            borderRadius: '12px',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-            border: '1px solid rgba(0, 0, 0, 0.05)',
-          },
-          success: {
-            iconTheme: {
-              primary: '#10b981',
-              secondary: '#fff',
-            },
-          },
-          error: {
-            iconTheme: {
-              primary: '#ef4444',
-              secondary: '#fff',
-            },
-          },
-        }}
-      />
     </BrowserRouter>
   );
 };
