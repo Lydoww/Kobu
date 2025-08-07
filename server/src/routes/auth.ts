@@ -101,7 +101,16 @@ const router = express.Router();
 router.post('/register', validateRegister, async (req, res, next) => {
   try {
     const result = await registerUser(req.body);
-    res.status(201).json(result);
+    res.cookie('token', result.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.status(201).json({
+      message: result.message,
+      user: result.user,
+    });
   } catch (error) {
     next(error);
   }
@@ -132,7 +141,16 @@ router.post('/register', validateRegister, async (req, res, next) => {
 router.post('/login', validateLogin, async (req, res, next) => {
   try {
     const result = await loginUser(req.body);
-    res.status(200).json(result);
+    res.cookie('token', result.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({
+      message: result.message,
+      user: result.user,
+    });
   } catch (error) {
     next(error);
   }
@@ -158,6 +176,11 @@ router.post('/login', validateLogin, async (req, res, next) => {
  */
 router.get('/me', authMiddleware, (req, res) => {
   res.json({ message: 'Protected route', user: req.user });
+});
+
+router.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Logged out successfully' });
 });
 
 export default router;

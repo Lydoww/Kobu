@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import { setupSwagger } from './swagger';
 import errorMiddleware from './middleware/errorMiddleware';
@@ -16,6 +17,7 @@ export const createApp = () => {
   const app = express();
 
   // Middlewares
+  app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(morgan('dev'));
   app.use(helmet());
