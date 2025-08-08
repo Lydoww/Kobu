@@ -23,9 +23,6 @@ const App = () => {
     initAuth();
   }, [checkAuth]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <BrowserRouter>
