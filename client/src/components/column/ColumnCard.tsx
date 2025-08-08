@@ -13,6 +13,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useDroppable } from '@dnd-kit/core';
 import DraggableTask from '../task/DraggableTask';
 import { Plus, Edit3, Trash2, Check, X, MoreVertical } from 'lucide-react';
 import ConfirmationModal from '../ConfirmationModal';
@@ -41,6 +42,10 @@ const ColumnCard = ({ column, columnType }: ColumnCardProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const columnTasks = tasks.filter((task) => task.columnId === column.id);
+
+  const { setNodeRef, isOver } = useDroppable({
+    id: `column-${column.id}`,
+  });
 
   const handleToggleModal = () => {
     setIsTaskModalOpen(!isTaskModalOpen);
@@ -107,7 +112,6 @@ const ColumnCard = ({ column, columnType }: ColumnCardProps) => {
       setIsDeleting(false);
     }
   };
-
   const handleAddTask = async () => {
     setIsTaskModalOpen(true);
   };
@@ -128,7 +132,12 @@ const ColumnCard = ({ column, columnType }: ColumnCardProps) => {
 
   return (
     <div
-      className={`${kanbanColors[columnType]} rounded-2xl flex-shrink-0 w-full h-full shadow-lg flex flex-col transition-all duration-200`}
+      ref={setNodeRef}
+      className={`${
+        kanbanColors[columnType]
+      } rounded-2xl flex-shrink-0 w-80 h-full shadow-lg flex flex-col transition-all duration-200 ${
+        isOver ? 'ring-2 ring-blue-400 ring-opacity-50 shadow-xl scale-105' : ''
+      }`}
     >
       {/* Header moderne de la colonne */}
       <div className='p-6 pb-4'>

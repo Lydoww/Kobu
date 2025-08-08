@@ -77,9 +77,6 @@ const BoardDetailCompo = () => {
           .filter((t) => t.columnId === newColumnId)
           .sort((a, b) => a.order - b.order);
 
-        const draggedIndex = columnTasks.findIndex(
-          (t) => t.id === draggedTask.id
-        );
         const overIndex = columnTasks.findIndex((t) => t.id === overTask.id);
 
         newOrder = overIndex;
