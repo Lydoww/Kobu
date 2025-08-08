@@ -180,14 +180,14 @@ router.get('/me', authMiddleware, async (req, res) => {
     if (!req.user?.id) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    // Récupère les données complètes de l'utilisateur depuis la DB
+    
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
       select: {
         id: true,
         username: true,
         email: true,
-        role: true, // Si tu en as besoin
+        role: true, 
       },
     });
 
