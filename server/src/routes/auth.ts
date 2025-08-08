@@ -5,6 +5,7 @@ import { authMiddleware } from '../middleware/authMiddleware';
 import { validateRegister } from '../middleware/Validation/validateRegister';
 import { validateLogin } from '../middleware/Validation/validateLogin';
 import rateLimit from 'express-rate-limit';
+import prisma from '../lib/prisma';
 
 // const loginLimiter = rateLimit({
 //   windowMs: 10 * 60 * 1000, // 10 minutes
@@ -174,13 +175,34 @@ router.post('/login', validateLogin, async (req, res, next) => {
  *       401:
  *         description: Unauthorized
  */
-router.get('/me', authMiddleware, (req, res) => {
-  res.json({ message: 'Protected route', user: req.user });
-});
+router.get('/me', authMiddleware, async (req, res) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    // Récupère les données complètes de l'utilisateur depuis la DB
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true, // Si tu en as besoin
+      },
+    });
 
-router.post('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.json({ message: 'Logged out successfully' });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({
+      message: 'Protected route',
+      user: user,
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 export default router;
