@@ -24,17 +24,13 @@ export const createApp = () => {
 
   app.use(
     cors({
-      origin: ['http://localhost:5173'],
+      origin: [
+        'http://localhost:5173',
+        process.env.FRONTEND_URL || 'https://kobu-mu.vercel.app', // ← Fallback
+      ].filter(Boolean),
       credentials: true,
     })
   );
-
-  // const limiter = rateLimit({
-  //   windowMs: 15 * 60 * 1000,
-  //   max: 100,
-  //   message: 'Too many requests, try again later.',
-  // });
-  // app.use('/api', limiter);
 
   // Swagger (dev only)
   if (process.env.NODE_ENV === 'development') {
