@@ -1,4 +1,4 @@
-import { Board, Column, Task } from '@prisma/client';
+import type { Board, Column, Task } from '@prisma/client';
 
 export type TaskType = Task;
 

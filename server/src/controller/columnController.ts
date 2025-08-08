@@ -8,7 +8,7 @@ import {
   updateOneColumn,
 } from '../services/columnService';
 import prisma from '../lib/prisma';
-import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const getColumnsHandler = async (req: Request, res: Response) => {
   if (!req.user) {
@@ -61,7 +61,7 @@ export const createColumn = async (
     res.json({ success: true, data: newColumn });
   } catch (error: any) {
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error instanceof PrismaClientKnownRequestError &&
       error.code === 'P2002'
     ) {
       return next(

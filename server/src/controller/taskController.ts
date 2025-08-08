@@ -13,7 +13,7 @@ import {
   moveTaskToPosition,
   updateOneTask,
 } from '../services/taskService';
-import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { parseOptionalDate } from '../services/utils/dateUtils';
 
 export const getTasksHandler = async (
@@ -73,7 +73,7 @@ export const createTask = async (
     res.json({ success: true, data: newTask });
   } catch (error: any) {
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error instanceof PrismaClientKnownRequestError &&
       error.code === 'P2002'
     ) {
       return next(

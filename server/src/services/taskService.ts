@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
 import { verifyColumnOwnership, verifyTaskOwnership } from './utils/utils';
+import type { PrismaClient } from '@prisma/client';
 
 interface UpdateTaskInput {
   taskId: string;
@@ -84,7 +85,6 @@ export const moveTaskToPosition = async (
     }
 
     if (oldColumnId !== newColumnId) {
-      // Changement de colonne
       await tx.task.updateMany({
         where: {
           columnId: oldColumnId,
@@ -101,7 +101,6 @@ export const moveTaskToPosition = async (
         data: { order: { increment: 1 } },
       });
     } else {
-      // Même colonne - réorganisation
       if (newOrder > oldOrder) {
         await tx.task.updateMany({
           where: {
@@ -129,19 +128,17 @@ export const moveTaskToPosition = async (
       },
     });
 
-    // AJOUT : Vérification et correction automatique des doublons
     const allTasksInColumn = await tx.task.findMany({
       where: { columnId: newColumnId },
       orderBy: { order: 'asc' },
     });
 
-    // Détecter les doublons
     const orders = allTasksInColumn.map((t) => t.order);
     const hasDuplicates = orders.length !== new Set(orders).size;
 
     if (hasDuplicates) {
       console.warn('⚠️ Fixing duplicate orders in column:', newColumnId);
-      // Recalculer tous les ordres
+
       for (let i = 0; i < allTasksInColumn.length; i++) {
         await tx.task.update({
           where: { id: allTasksInColumn[i].id },
@@ -149,7 +146,6 @@ export const moveTaskToPosition = async (
         });
       }
 
-      // Retourner la tâche avec le bon ordre
       return await tx.task.findUnique({ where: { id: taskId } });
     }
 
@@ -160,7 +156,7 @@ export const moveTaskToPosition = async (
 export const fixTaskOrders = async (columnId: string) => {
   const tasks = await prisma.task.findMany({
     where: { columnId },
-    orderBy: { createdAt: 'asc' }, // Ordonner par date de création
+    orderBy: { createdAt: 'asc' },
   });
 
   for (let i = 0; i < tasks.length; i++) {

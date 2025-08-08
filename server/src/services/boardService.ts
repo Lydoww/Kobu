@@ -1,7 +1,7 @@
 import { NotFoundError } from '../errors/AppError';
 import prisma from '../lib/prisma';
 import { BoardWithColumnAndTasks } from '../types/board';
-import { Board } from '@prisma/client';
+import type { Board } from '@prisma/client';
 
 export const getUserBoards = async (
   userId: string
@@ -93,20 +93,33 @@ export const deleteOneBoard = async (
   boardId: string,
   userId: string
 ): Promise<Board> => {
-  const existingBoard = await prisma.board.findFirst({
-    where: {
-      id: boardId,
-      userId,
-    },
-  });
-  if (!existingBoard) {
-    throw new NotFoundError('This board does not exist');
-  }
+  try {
+    console.log('🔍 Attempting to delete board:', { boardId, userId });
 
-  const deleteThisBoard = await prisma.board.delete({
-    where: {
-      id: boardId,
-    },
-  });
-  return deleteThisBoard;
+    const existingBoard = await prisma.board.findFirst({
+      where: {
+        id: boardId,
+        userId,
+      },
+    });
+
+    if (!existingBoard) {
+      console.log('❌ Board not found');
+      throw new NotFoundError('This board does not exist');
+    }
+
+    console.log('✅ Board found, proceeding with deletion');
+
+    const deleteThisBoard = await prisma.board.delete({
+      where: {
+        id: boardId,
+      },
+    });
+
+    console.log('✅ Board deleted successfully');
+    return deleteThisBoard;
+  } catch (error) {
+    console.error('❌ Error in deleteOneBoard:', error);
+    throw error;
+  }
 };
