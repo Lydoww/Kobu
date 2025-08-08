@@ -10,9 +10,10 @@ import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { useAuthStore } from './store/authStore';
 import { useEffect, useState } from 'react';
+import WorkspaceSkeleton from './components/skeleton/WorkspaceSkeleton';
 
 const App = () => {
-  const { checkAuth, isAuthenticated } = useAuthStore();
+  const { checkAuth } = useAuthStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +24,9 @@ const App = () => {
     initAuth();
   }, [checkAuth]);
 
+  if (isLoading) {
+    return <WorkspaceSkeleton />;
+  }
 
   return (
     <BrowserRouter>

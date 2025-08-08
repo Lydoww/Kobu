@@ -1,6 +1,10 @@
 import { Plus } from 'lucide-react';
 
-function CreateBoardCard({ onCreateBoard }) {
+interface CreateBoardCardProps {
+  onCreateBoard: () => void;
+}
+
+function CreateBoardCard({ onCreateBoard }: CreateBoardCardProps) {
   return (
     <button
       onClick={onCreateBoard}

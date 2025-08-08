@@ -1,7 +1,25 @@
 import { Folder, TrendingUp, Calendar } from 'lucide-react';
+import type { Board } from '../../types/Board';
+import type { LucideIcon } from 'lucide-react';
 
-function StatCard({ title, value, color, Icon }) {
-  const colorClasses = {
+type ColorType = 'blue' | 'green' | 'purple';
+
+interface StatCardProps {
+  title: string;
+  value: number;
+  color: ColorType;
+  Icon: LucideIcon;
+}
+
+interface StatsCardsProps {
+  boards: Board[];
+}
+
+function StatCard({ title, value, color, Icon }: StatCardProps) {
+  const colorClasses: Record<
+    ColorType,
+    { bg: string; text: string; value: string }
+  > = {
     blue: {
       bg: 'bg-blue-100',
       text: 'text-blue-600',
@@ -36,24 +54,24 @@ function StatCard({ title, value, color, Icon }) {
   );
 }
 
-function StatsCards({ boards }) {
+function StatsCards({ boards }: StatsCardsProps) {
   const stats = [
     {
       title: 'Total Boards',
       value: boards.length,
-      color: 'blue',
+      color: 'blue' as const,
       Icon: Folder,
     },
     {
       title: 'Active',
       value: boards.length,
-      color: 'green',
+      color: 'green' as const,
       Icon: TrendingUp,
     },
     {
       title: 'Recent',
       value: Math.min(boards.length, 3),
-      color: 'purple',
+      color: 'purple' as const,
       Icon: Calendar,
     },
   ];

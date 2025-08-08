@@ -1,6 +1,10 @@
 import { Plus } from 'lucide-react';
 
-function WorkspaceHeader({ onCreateBoard }) {
+interface WorkspaceHeaderPros {
+  onCreateBoard: () => void;
+}
+
+function WorkspaceHeader({ onCreateBoard }: WorkspaceHeaderPros) {
   return (
     <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8'>
       <div>

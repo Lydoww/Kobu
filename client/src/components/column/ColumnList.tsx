@@ -4,10 +4,37 @@ import {
 } from '../../constant/KanbanColors';
 import type { Column } from '../../types/Column';
 import ColumnCard from './ColumnCard';
+import { useDroppable } from '@dnd-kit/core';
 
 interface ColumnListProps {
   columns: Column[];
 }
+
+// Composant wrapper pour les zones de drop
+const DroppableColumn = ({
+  column,
+  columnType,
+  className,
+}: {
+  column: Column;
+  columnType: KanbanColumnType;
+  className?: string;
+}) => {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `column-${column.id}`,
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`${className} ${
+        isOver ? 'ring-2 ring-blue-400 ring-opacity-50' : ''
+      }`}
+    >
+      <ColumnCard column={column} columnType={columnType} />
+    </div>
+  );
+};
 
 const ColumnList = ({ columns }: ColumnListProps) => {
   const colorKeys = Object.keys(kanbanColors) as KanbanColumnType[];
@@ -19,9 +46,12 @@ const ColumnList = ({ columns }: ColumnListProps) => {
         {columns.map((column, index) => {
           const columnType = colorKeys[index % colorKeys.length];
           return (
-            <div key={column.id} className='flex-shrink-0 w-96'>
-              <ColumnCard column={column} columnType={columnType} />
-            </div>
+            <DroppableColumn
+              key={column.id}
+              column={column}
+              columnType={columnType}
+              className='flex-shrink-0 w-96'
+            />
           );
         })}
       </div>
@@ -32,9 +62,12 @@ const ColumnList = ({ columns }: ColumnListProps) => {
           {columns.map((column, index) => {
             const columnType = colorKeys[index % colorKeys.length];
             return (
-              <div key={column.id} className='w-full'>
-                <ColumnCard column={column} columnType={columnType} />
-              </div>
+              <DroppableColumn
+                key={column.id}
+                column={column}
+                columnType={columnType}
+                className='w-full'
+              />
             );
           })}
         </div>
@@ -45,9 +78,12 @@ const ColumnList = ({ columns }: ColumnListProps) => {
         {columns.map((column, index) => {
           const columnType = colorKeys[index % colorKeys.length];
           return (
-            <div key={column.id} className='w-full'>
-              <ColumnCard column={column} columnType={columnType} />
-            </div>
+            <DroppableColumn
+              key={column.id}
+              column={column}
+              columnType={columnType}
+              className='w-full'
+            />
           );
         })}
       </div>

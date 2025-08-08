@@ -1,6 +1,10 @@
 import { Plus, Folder } from 'lucide-react';
 
-function EmptyState({ onCreateBoard }) {
+interface EmptyStateProps {
+  onCreateBoard: () => void;
+}
+
+function EmptyState({ onCreateBoard }: EmptyStateProps) {
   return (
     <div className='text-center py-16'>
       <div className='bg-gray-100 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center'>

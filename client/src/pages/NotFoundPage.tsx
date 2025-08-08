@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Home, ArrowLeft, Folder } from 'lucide-react';
+import { ArrowLeft, Folder } from 'lucide-react';
 
 function NotFoundPage() {
   return (

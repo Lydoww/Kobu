@@ -1,8 +1,14 @@
 import BoardCard from './BoardCard';
 import CreateBoardCard from './CreateBoardCard';
 import EmptyState from './EmptyState';
+import type { Board } from '../../types/Board';
 
-function BoardsGrid({ boards, onCreateBoard }) {
+interface BoardsGridProps {
+  boards: Board[];
+  onCreateBoard: () => void;
+}
+
+function BoardsGrid({ boards, onCreateBoard }: BoardsGridProps) {
   if (boards.length === 0) {
     return <EmptyState onCreateBoard={onCreateBoard} />;
   }

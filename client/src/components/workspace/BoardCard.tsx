@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Folder, MoreVertical, Users, Calendar } from 'lucide-react';
+import type { Board } from '../../types/Board';
 
-function BoardCard({ board }) {
+interface BoardCardProps {
+  board: Board;
+}
+
+function BoardCard({ board }: BoardCardProps) {
   return (
     <Link key={board.id} to={`/board/${board.id}`} className='group block'>
       <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-200 transition-all duration-200 h-full'>
