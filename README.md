@@ -199,20 +199,20 @@ model Task {
 
 ### Boards
 - `GET /api/boards` - Get user's boards
-- `POST /api/boards` - Create new board
+- `POST /api/board` - Create new board
 - `GET /api/board/:id` - Get specific board
 - `PUT /api/board/:id` - Update board
 - `DELETE /api/board/:id` - Delete board
 
 ### Columns
 - `GET /api/columns?boardId=:id` - Get board's columns
-- `POST /api/columns` - Create new column
+- `POST /api/column` - Create new column
 - `PUT /api/column/:id` - Update column
 - `DELETE /api/column/:id` - Delete column
 
 ### Tasks
 - `GET /api/tasks?columnId=:id` - Get column's tasks
-- `POST /api/tasks` - Create new task
+- `POST /api/task` - Create new task
 - `PUT /api/task/:id` - Update task
 - `DELETE /api/task/:id` - Delete task
 - `POST /api/task/:id/move` - Move task to different column/position
