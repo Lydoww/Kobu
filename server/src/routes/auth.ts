@@ -105,7 +105,7 @@ router.post('/register', validateRegister, async (req, res, next) => {
     res.cookie('token', result.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.status(201).json({
@@ -145,7 +145,7 @@ router.post('/login', validateLogin, async (req, res, next) => {
     res.cookie('token', result.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.status(200).json({
@@ -180,14 +180,14 @@ router.get('/me', authMiddleware, async (req, res) => {
     if (!req.user?.id) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    
+
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
       select: {
         id: true,
         username: true,
         email: true,
-        role: true, 
+        role: true,
       },
     });
 
