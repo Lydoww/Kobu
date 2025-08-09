@@ -253,10 +253,3 @@ This project is licensed under the MIT License.
 
 **Alexis Helm**
 - GitHub: [@Lydoww](https://github.com/Lydoww)
-
-## 🙏 Acknowledgments
-
-- Material-UI for the excellent component library
-- @dnd-kit for smooth drag and drop functionality
-- Prisma for the amazing ORM experience
-- Vercel and Railway for seamless deployment
