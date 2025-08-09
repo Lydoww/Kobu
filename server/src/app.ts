@@ -22,12 +22,6 @@ export const createApp = () => {
   app.use(morgan('dev'));
   app.use(helmet());
 
-  app.use((req, res, next) => {
-    console.log('Origin:', req.headers.origin);
-    console.log('Method:', req.method);
-    next();
-  });
-
   app.use(
     cors({
       origin: ['http://localhost:5173', 'https://kobu-mu.vercel.app'],

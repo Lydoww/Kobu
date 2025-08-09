@@ -94,8 +94,6 @@ export const deleteOneBoard = async (
   userId: string
 ): Promise<Board> => {
   try {
-    console.log('🔍 Attempting to delete board:', { boardId, userId });
-
     const existingBoard = await prisma.board.findFirst({
       where: {
         id: boardId,
@@ -104,11 +102,8 @@ export const deleteOneBoard = async (
     });
 
     if (!existingBoard) {
-      console.log('❌ Board not found');
       throw new NotFoundError('This board does not exist');
     }
-
-    console.log('✅ Board found, proceeding with deletion');
 
     const deleteThisBoard = await prisma.board.delete({
       where: {
@@ -116,7 +111,6 @@ export const deleteOneBoard = async (
       },
     });
 
-    console.log('✅ Board deleted successfully');
     return deleteThisBoard;
   } catch (error) {
     console.error('❌ Error in deleteOneBoard:', error);
