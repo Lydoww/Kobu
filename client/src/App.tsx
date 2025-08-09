@@ -31,28 +31,20 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Redirect root to workspace */}
         <Route path='/' element={<Navigate to='/workspace' replace />} />
 
-        {/* App Layout wrapper */}
         <Route element={<AppLayout />}>
-          {/* Public routes */}
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
 
-          {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
-            {/* Main workspace dashboard */}
             <Route path='/workspace' element={<WorkspacePage />} />
 
-            {/* Boards management */}
             <Route path='/boards' element={<BoardsPage />} />
             <Route path='/board/:id' element={<BoardDetailsPage />} />
 
-            {/* User profile */}
             <Route path='/profile' element={<ProfilePage />} />
 
-            {/* Legacy route redirect */}
             <Route
               path='/boardsPage'
               element={<Navigate to='/boards' replace />}
@@ -60,7 +52,6 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* 404 page */}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

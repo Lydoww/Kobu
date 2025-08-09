@@ -16,6 +16,8 @@ import { useState, useEffect } from 'react';
 import { LogOut, User } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 
+import Logo from '../../assets/icons/logo.png';
+
 function NavBarTest() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -105,7 +107,15 @@ function NavBarTest() {
         <Toolbar disableGutters>
           {/* Logo - Clickable to go to workspace */}
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <AdbIcon sx={{ display: 'flex', mr: 1 }} />
+            <img
+              src={Logo}
+              alt='Kōbu Logo'
+              style={{
+                height: '32px',
+                width: 'auto',
+                marginRight: '12px',
+              }}
+            />
             <Typography
               variant='h6'
               noWrap

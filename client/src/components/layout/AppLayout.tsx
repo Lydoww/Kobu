@@ -19,7 +19,15 @@ export default function AppLayout() {
 
       {/* Footer */}
       <footer className='py-4 shadow-sm text-center text-sm text-gray-500 bg-white border-t border-gray-200'>
-        © 2025 Kōbu. All rights reserved.
+        © 2025 Kōbu. All rights reserved. - Created by{' '}
+        <a
+          href='https://github.com/Lydoww'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200 font-medium'
+        >
+          Alexis Helm
+        </a>
       </footer>
     </div>
   );
