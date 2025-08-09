@@ -2,6 +2,8 @@
 
 A full-stack Kanban board application built with React and Node.js, featuring drag-and-drop functionality, real-time state management, and a modern UI.
 
+<img width="1891" height="872" alt="image" src="https://github.com/user-attachments/assets/2ca2018d-8d63-47ca-8bd9-b7b8a9755695" />
+
 ## 🚀 Live Demo
 
 - **Frontend**: [https://kobu-mu.vercel.app](https://kobu-mu.vercel.app)
