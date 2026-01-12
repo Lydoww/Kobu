@@ -7,7 +7,7 @@ A full-stack Kanban board application built with React and Node.js, featuring dr
 ## 🚀 Live Demo
 
 - **Frontend**: [https://kobu-mu.vercel.app](https://kobu-mu.vercel.app)
-- **Backend API**: [https://kobu-production.up.railway.app](https://kobu-production.up.railway.app)
+- **Backend API**: ~~[https://kobu-production.up.railway.app](https://kobu-production.up.railway.app)~~ (Currently offline to avoid hosting costs - run locally with Docker instead)
 
 ## ✨ Features
 
@@ -45,8 +45,8 @@ A full-stack Kanban board application built with React and Node.js, featuring dr
 
 ### Infrastructure
 - **Frontend Deployment**: Vercel
-- **Backend Deployment**: Railway
-- **Database**: PostgreSQL on Railway
+- **Backend Deployment**: Railway (currently offline)
+- **Database**: PostgreSQL on Railway (currently offline)
 - **Containerization**: Docker + Docker Compose for local development
 
 ## 📁 Project Structure
