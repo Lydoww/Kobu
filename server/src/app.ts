@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import rateLimit from 'express-rate-limit';
 import { setupSwagger } from './swagger';
 import errorMiddleware from './middleware/errorMiddleware';
 import { authMiddleware } from './middleware/authMiddleware';
@@ -24,7 +23,7 @@ export const createApp = () => {
 
   app.use(
     cors({
-      origin: ['http://localhost:5173', 'https://kobu-mu.vercel.app'],
+      origin: ['http://localhost:5174', 'https://kobu-mu.vercel.app'],
       credentials: true,
     })
   );
@@ -39,12 +38,6 @@ export const createApp = () => {
   app.use('/api', boardRoutes);
   app.use('/api', columnRoutes);
   app.use('/api', taskRoutes);
-
-  // Test route
-
-  app.get('/', (req, res) => {
-    res.send('API Kanban is running');
-  });
 
   app.get('/health', (req, res) => {
     res.status(200).send('OK');
